@@ -42,7 +42,7 @@ COPY ./tailwind.application.config.js ./tailwind.application.config.js
 COPY ./app/javascript ./app/javascript
 COPY ./app/views ./app/views
 
-RUN echo "gem 'shakapacker'" > Gemfile && ./bin/shakapacker
+RUN echo "gem 'shakapacker'" > Gemfile && chmod +x ./bin/shakapacker && ./bin/shakapacker
 
 FROM ruby:4.0.9-alpine AS app
 
@@ -94,7 +94,7 @@ COPY --chown=docuseal:docuseal --from=webpack /app/public/packs ./public/packs
 RUN mkdir -p /app/public/fonts && ln -s /fonts/DancingScript-Regular.otf /app/public/fonts/ && \
     mkdir -p /usr/share/fonts/noto/bold && ln -s /fonts/GoNotoKurrent-Regular.ttf /usr/share/fonts/noto/ && ln -s /fonts/GoNotoKurrent-Bold.ttf /usr/share/fonts/noto/bold/ && fc-cache -f && \
     bundle exec bootsnap precompile -j 1 --gemfile app/ lib/ && \
-    chown -R docuseal:docuseal /app/tmp/cache
+    chown -R docuseal:docuseal /app/tmp/cache && chmod +x /app/bin/*
 
 WORKDIR /data/docuseal
 ENV HOME=/home/docuseal
