@@ -4,7 +4,9 @@ module Docuseal
   PRODUCT_URL = 'https://www.docuseal.com'
   PRODUCT_EMAIL_URL = ENV.fetch('PRODUCT_EMAIL_URL', PRODUCT_URL)
   NEWSLETTER_URL = "#{PRODUCT_URL}/newsletters".freeze
-  PRODUCT_NAME = 'DocuSeal'
+  PRODUCT_NAME = 'Evergentic eSign'
+  ORIGINAL_PRODUCT_NAME = 'DocuSeal'
+  SOURCE_URL = 'https://github.com/evergentic/docuseal'
   DEFAULT_APP_URL = ENV.fetch('APP_URL', 'http://localhost:3000')
   GITHUB_URL = 'https://github.com/docusealco/docuseal'
   DISCORD_URL = 'https://discord.gg/qygYCDGck9'
@@ -116,6 +118,10 @@ module Docuseal
 
   def product_name
     PRODUCT_NAME
+  end
+
+  def original_product_name
+    ORIGINAL_PRODUCT_NAME
   end
 
   def refresh_default_url_options!
