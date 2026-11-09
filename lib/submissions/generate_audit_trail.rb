@@ -44,7 +44,7 @@ module Submissions
 
         io = StringIO.new
 
-        document.trailer.info[:Creator] = "#{Docuseal.product_name} (#{Docuseal::PRODUCT_URL})"
+        document.trailer.info[:Creator] = "#{Docuseal.product_name} (#{Docuseal::APP_PRODUCT_URL})"
 
         if pkcs
           sign_params = {
@@ -545,7 +545,7 @@ module Submissions
     end
 
     def sign_reason
-      'Signed with DocuSeal.com'
+      'Signed with Evergentic eSign'
     end
 
     def select_attachments(submitter)
@@ -567,11 +567,11 @@ module Submissions
     def add_logo(column, _submission = nil)
       column.image(PdfIcons.logo_io, width: 40, height: 40, position: :float)
 
-      column.formatted_text([{ text: 'DocuSeal',
-                               link: Docuseal::PRODUCT_EMAIL_URL }],
+      column.formatted_text([{ text: 'Evergentic eSign',
+                               link: Docuseal::APP_PRODUCT_URL }],
                             font_size: 20,
                             font: [FONT_NAME, { variant: :bold }],
-                            width: 100,
+                            width: 220,
                             padding: [5, 0, 0, 8],
                             position: :float, text_align: :left)
     end

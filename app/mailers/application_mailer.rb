@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'Evergentic <sign@mail.evergentic.ai>'
+  default from: 'Evergentic eSign <sign@mail.evergentic.ai>'
   layout 'mailer'
 
   register_interceptor ActionMailerConfigsInterceptor
