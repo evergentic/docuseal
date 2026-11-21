@@ -10,3 +10,8 @@ kept in interactive pages and emails, as the additional term requires. No Pro (c
 features are included or unlocked.
 
 Copyright holders of the original work: DocuSeal LLC and contributors.
+
+## 2026-11-21 hardening
+- In-container Redis no longer persists to disk (`--save '' --appendonly no --dir /tmp`): persisting into WORKDIR failed with EACCES, after which Redis refused every write (MISCONF) and the mail/webhook job queue stopped. The queue is in-memory by design (no external Redis).
+- `/esign-disclosure`: Evergentic's own electronic records and signature disclosure (ESIGN Act, Fla. Stat. 668.50); the signing form links to it instead of docuseal.com.
+- `POST /api/templates/pdf`: create a template from a PDF with explicit roles and field areas (token-authenticated, same ability check as the web upload). Open-source code paths only; no Pro feature is included or unlocked.
