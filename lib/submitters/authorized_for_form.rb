@@ -19,7 +19,8 @@ module Submitters
 
       return true if submission.submitters_order_random?
       return true if (submission.template_submitters || submission.template.submitters).size < 2
-      return true if submission.template&.preferences&.dig('submitters_order') != 'preserved' &&
+      return true if !submission.submitters_order_preserved? &&      # Evergentic: the submission's own order counts
+                     submission.template&.preferences&.dig('submitters_order') != 'preserved' &&
                      !AccountConfig.exists?(account_id: submitter.account_id,
                                             key: AccountConfig::ENFORCE_SIGNING_ORDER_KEY, value: true)
 
