@@ -26,6 +26,7 @@ class SubmitFormController < ApplicationController
     @form_configs = Submitters::FormConfigs.call(@submitter, CONFIG_KEYS)
 
     return render :awaiting if (@form_configs[:enforce_signing_order] ||
+                                submission.submitters_order_preserved? ||      # Evergentic: honour the submission's own order (API order: preserved)
                                 submission.template&.preferences&.dig('submitters_order') == 'preserved') &&
                                !Submitters.current_submitter_order?(@submitter)
 
@@ -57,6 +58,11 @@ class SubmitFormController < ApplicationController
 
     if @submitter.completed_at?
       return render json: { error: I18n.t('form_has_been_completed_already') }, status: :unprocessable_content
+    end
+
+    # Evergentic: the signing order is enforced on submit too, not only when the page renders
+    unless Submitters::AuthorizedForForm.pass_submitters_order?(@submitter)
+      return render json: { error: 'Waiting for the previous signer' }, status: :unprocessable_content
     end
 
     if @submitter.submission.template&.archived_at? || @submitter.submission.archived_at?
