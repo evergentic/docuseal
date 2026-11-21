@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
 
   get 'up' => 'rails/health#show'
+  get 'esign-disclosure' => 'esign_disclosure#show', as: :esign_disclosure
   get 'manifest' => 'pwa#manifest'
 
   devise_for :users, path: '/', only: %i[sessions passwords],
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
         resources :emails, only: %i[create], controller: 'submissions', as: :submissions_emails
       end
     end
+    resources :templates_pdf, only: %i[create], path: 'templates/pdf'
     resources :templates, only: %i[update show index destroy] do
       resources :clone, only: %i[create], controller: 'templates_clone'
       resources :submissions, only: %i[index create]

@@ -55,6 +55,7 @@ Puma::Plugin.create do
 
       exec('redis-server', '--requirepass', Digest::SHA1.hexdigest("redis#{ENV.fetch('SECRET_KEY_BASE', '')}"),
            '--bind', '127.0.0.1', '--port', '16379',
+           '--save', '', '--appendonly', 'no', '--stop-writes-on-bgsave-error', 'no', '--dir', '/tmp',
            '--loglevel', 'warning')
     end
   end
