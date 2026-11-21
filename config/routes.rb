@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   root 'dashboard#index'
 
-  get 'up' => 'rails/health#show'
+  get 'up' => 'evg_health#show'      # Evergentic: checks the database, Redis (job queue) and blob storage, not just boot
   get 'esign-disclosure' => 'esign_disclosure#show', as: :esign_disclosure
   get 'manifest' => 'pwa#manifest'
 
