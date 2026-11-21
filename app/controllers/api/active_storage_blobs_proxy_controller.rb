@@ -39,7 +39,9 @@ module Api
       if request.headers['Range'].present?
         send_blob_byte_range_data blob, request.headers['Range']
       else
-        http_cache_forever public: true do
+        # Evergentic: signed contracts must never sit in a shared cache (upstream sent public, immutable, max-age ~100 years)
+        response.headers['Cache-Control'] = 'private, no-store'
+        begin
           response.headers['Accept-Ranges'] = 'bytes'
 
           if request.head?
