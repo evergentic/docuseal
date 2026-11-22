@@ -1,0 +1,15 @@
+# One QA identity per role. NO identity => items for that role are UNKNOWN => the gate FAILS. Credentials are minted at run time, never stored here.
+# auth.type: none | bearer_cmd | link_cmd | storage_state | door_signed | unavailable (with `why`)
+#
+# esign.evergentic.ai: Container Apps built-in auth (Entra, app "Evergentic eSign (staff sign-in)", assignment required) in front of
+# everything except the signer paths; DocuSeal's own login behind that. A signer is anonymous and holds only the per-signer link.
+roles:
+  signer: {auth: {type: none}}
+  staff:
+    auth:
+      type: unavailable
+      why: "no QA staff identity yet: needs a non-personal QA principal assigned to the Entra app AND mapped to a DocuSeal user (Mark's call; see release/esign/RELEASE-CHECKLIST.yml KNOWN GAPS)"
+  admin:
+    auth:
+      type: unavailable
+      why: "no QA admin identity yet (same as staff)"
