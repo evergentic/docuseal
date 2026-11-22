@@ -46,6 +46,10 @@ RUN echo "gem 'shakapacker'" > Gemfile && chmod +x ./bin/shakapacker && ./bin/sh
 
 FROM ruby:4.0.9-alpine AS app
 
+# Evergentic: every image carries its source commit (release gate refuses an unstamped image or one whose commit is not on main).
+ARG COMMIT=unset
+LABEL org.evergentic.commit=$COMMIT
+
 ENV RAILS_ENV=production
 ENV BUNDLE_WITHOUT="development:test"
 ENV OPENSSL_CONF=/etc/openssl_legacy.cnf

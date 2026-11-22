@@ -1,0 +1,26 @@
+# RELEASE CHECKLIST: ca-evg-esign (Evergentic eSign, DocuSeal 3.3.5 fork)
+# Run by job-evg-esign-gate (CHECKLIST_DIR=release/esign) through gated_deploy.py esign ca-evg-esign <revision>.
+#
+# STATE 2026-11-22: the signer-facing features below are real and checked on desktop + Android/Edge. The gate still FAILS CLOSED, on
+# purpose, until the three pillars (estate hard rule 2026-10-28) can be proven for this app. KNOWN GAPS, each a decision or a build:
+# - no `pillars:` section yet, so P fails. Needs:
+#   * access: a route manifest from `rails routes` of this fork, and QA identities for staff/admin (roles.yml says why they are missing);
+#   * audit: DocuSeal has no hash-chained audit viewer or /__qa-audit-probe; the fork needs an Evergentic audit module (eSign lane build);
+#   * isolation: isolation_evidence.py for client esign (rg-evergentic-esign), once eSign is listed in standards/CLIENTS.json.
+# - staff/admin features (template list, send flow) wait for the QA staff identity.
+# Until these land, releases stay with the eSign lane's staged pattern (0% candidate, smoke, promote, keep the old revision), recorded
+# in evergentic/esign README; the gate job exists so the switch is a checklist PR, not new infrastructure.
+template: false
+app: ca-evg-esign
+release: esign-gate-bootstrap
+deploy_owner: local_8bfd9a8b-1b80-4cdc-857a-cda90806195e
+prod_url: "https://esign.evergentic.ai"
+flag_names: []
+flag_states: []
+features:
+  - {id: esign-disclosure-visible, role: signer, page: /esign-disclosure, selector: 'h1', usable: none, expect: visible}
+  - {id: esign-disclosure-consent-text, role: signer, page: /esign-disclosure, selector: 'body:has-text("electronic")', usable: none, expect: visible}
+  - {id: health-deep-ok, role: signer, page: /up, selector: 'pre:has-text("\"database\":\"ok\"")', usable: none, expect: visible}
+untouched_pages:
+  - {role: signer, path: /esign-disclosure}
+nav: []

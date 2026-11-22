@@ -1,0 +1,6 @@
+{
+ "app": "esign",
+ "owner_lane": "local_8bfd9a8b-1b80-4cdc-857a-cda90806195e",
+ "rule": "Only the owner lane releases ca-evg-esign, and only through gated_deploy.py esign (deploy_allow.json client esign, gated-actions #7, Dispatch 2026-11-22-I). Hand changes to the owner as a PR.",
+ "source_repo": "evergentic/docuseal"
+}
