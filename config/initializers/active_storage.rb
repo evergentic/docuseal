@@ -58,6 +58,16 @@ ActiveSupport.on_load(:active_storage_blob) do
   def delete
     service.delete(key)
   end
+
+  # Evergentic: with ACTIVE_STORAGE_PROXY_ALL=true every blob URL handed to a browser (page previews, signatures,
+  # attachments) is the app's own signed, expiring proxy URL (/blobs_proxy/...) instead of a direct storage-account
+  # SAS URL. This lets the storage account run with public network access disabled (private endpoint only).
+  # Same expiry as the presigned URLs it replaces (PRESIGNED_URLS_EXPIRE_MINUTES, default 240).
+  if ENV['ACTIVE_STORAGE_PROXY_ALL'] == 'true'
+    def url(expires_in: ActiveStorage.service_urls_expire_in, **)
+      self.class.proxy_url(self, expires_at: (expires_in || 240.minutes).from_now)
+    end
+  end
 end
 
 ActiveStorage::LogSubscriber.detach_from(:active_storage) if Rails.env.production?
